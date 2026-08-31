@@ -1,1 +1,0 @@
-# Brute-Force-Analysis-with-Splunk
