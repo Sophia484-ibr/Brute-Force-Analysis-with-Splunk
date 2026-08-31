@@ -1,0 +1,48 @@
+# Brute Force Detection – Splunk Queries
+
+## 1. View Failed Login Attempts
+
+```spl
+index=* sourcetype="WinEventLog:Security" EventCode=4625
+```
+
+## 2. Count Failed Login Attempts
+
+```spl
+index=* sourcetype="WinEventLog:Security" EventCode=4625
+| stats count
+```
+
+## 3. Count Failed Logins by Account
+
+```spl
+index=* sourcetype="WinEventLog:Security" EventCode=4625
+| stats count by Account_Name
+| sort - count
+```
+
+## 4. Count Failed Logins by Source Network Address
+
+```spl
+index=* sourcetype="WinEventLog:Security" EventCode=4625
+| stats count by Source_Network_Address
+| sort - count
+```
+
+## 5. Identify Failed Logins by Source and Account
+
+```spl
+index=* sourcetype="WinEventLog:Security" EventCode=4625
+| stats count by Source_Network_Address, Account_Name
+| sort - count
+```
+
+## 6. Detect Possible Brute Force Activity
+
+```spl
+index=* sourcetype="WinEventLog:Security" EventCode=4625
+| stats count by Source_Network_Address, Account_Name
+| where count >= 10
+| sort - count
+```
+
